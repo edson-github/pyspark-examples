@@ -23,7 +23,7 @@ def convertCase(str):
     resStr=""
     arr = str.split(" ")
     for x in arr:
-       resStr= resStr + x[0:1].upper() + x[1:len(x)] + " "
+        resStr = resStr + x[:1].upper() + x[1:] + " "
     return resStr 
 
 """ Converting function to UDF """
@@ -48,11 +48,11 @@ spark.udf.register("convertUDF", convertCase,StringType())
 df.createOrReplaceTempView("NAME_TABLE")
 spark.sql("select Seqno, convertUDF(Name) as Name from NAME_TABLE") \
      .show(truncate=False)
-     
+
 spark.sql("select Seqno, convertUDF(Name) as Name from NAME_TABLE " + \
           "where Name is not null and convertUDF(Name) like '%John%'") \
      .show(truncate=False)  
-     
+
 """ null check """
 
 columns = ["Seqno","Name"]
@@ -64,8 +64,12 @@ data = [("1", "john jones"),
 df2 = spark.createDataFrame(data=data,schema=columns)
 df2.show(truncate=False)
 df2.createOrReplaceTempView("NAME_TABLE2")
-    
-spark.udf.register("_nullsafeUDF", lambda str: convertCase(str) if not str is None else "" , StringType())
+
+spark.udf.register(
+    "_nullsafeUDF",
+    lambda str: convertCase(str) if str is not None else "",
+    StringType(),
+)
 
 spark.sql("select _nullsafeUDF(Name) from NAME_TABLE2") \
      .show(truncate=False)

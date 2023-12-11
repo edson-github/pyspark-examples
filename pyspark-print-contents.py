@@ -4,6 +4,7 @@ author SparkByExamples.com
 """
 
 
+
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
@@ -19,7 +20,7 @@ print(rdd)
 dataColl=rdd.collect()
 
 for row in dataColl:
-    print(row[0] + "," +str(row[1]))
+    print(f"{row[0]},{str(row[1])}")
 """
 deptColumns = ["dept_name","dept_id"]
 deptDF = spark.createDataFrame(data=dept, schema = deptColumns)

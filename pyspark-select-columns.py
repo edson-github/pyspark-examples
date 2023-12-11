@@ -5,6 +5,7 @@ Created on Sat Jun 13 21:08:30 2020
 @author: NNK
 """
 
+
 import pyspark
 from pyspark.sql import SparkSession
 
@@ -33,7 +34,7 @@ df.select(col("firstname").alias("fname"),col("lastname")).show()
 
 # Show all columns
 df.select("*").show()
-df.select([col for col in df.columns]).show()
+df.select(list(df.columns)).show()
 df.select(*columns).show()
 
 df.select(df.columns[:3]).show(3)
@@ -50,7 +51,7 @@ data = [
         (("Mike","Mary","Williams"),"OH","M")
         ]
 
-from pyspark.sql.types import StructType,StructField, StringType        
+from pyspark.sql.types import StructType,StructField, StringType
 schema = StructType([
     StructField('name', StructType([
          StructField('firstname', StringType(), True),

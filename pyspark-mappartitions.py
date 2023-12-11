@@ -17,17 +17,17 @@ df.show()
 #Example 1 mapPartitions()
 def reformat(partitionData):
     for row in partitionData:
-        yield [row.firstname+","+row.lastname,row.salary*10/100]
+        yield [f"{row.firstname},{row.lastname}", row.salary*10/100]
 df.rdd.mapPartitions(reformat).toDF().show()
 
 #Example 2 mapPartitions()
 def reformat2(partitionData):
-  updatedData = []
-  for row in partitionData:
-    name=row.firstname+","+row.lastname
-    bonus=row.salary*10/100
-    updatedData.append([name,bonus])
-  return iter(updatedData)
+    updatedData = []
+    for row in partitionData:
+        name = f"{row.firstname},{row.lastname}"
+        bonus=row.salary*10/100
+        updatedData.append([name,bonus])
+    return iter(updatedData)
 
 df2=df.rdd.mapPartitions(reformat2).toDF("name","bonus")
 df2.show()

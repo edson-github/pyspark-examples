@@ -3,18 +3,19 @@
 author SparkByExamples.com
 """
 
+
 from pyspark.sql import SparkSession, Row
 
 
 row=Row("James",40)
-print(row[0] +","+str(row[1]))
+print(f"{row[0]},{str(row[1])}")
 row2=Row(name="Alice", age=11)
 print(row2.name)
 
 Person = Row("name", "age")
 p1=Person("James", 40)
 p2=Person("Alice", 35)
-print(p1.name +","+p2.name)
+print(f"{p1.name},{p2.name}")
 
 #PySpark Example
 spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
@@ -30,7 +31,7 @@ rdd=spark.sparkContext.parallelize(data)
 collData=rdd.collect()
 print(collData)
 for row in collData:
-    print(row.name + "," +str(row.lang))
+    print(f"{row.name},{str(row.lang)}")
 
 # RDD Example 2
 Person=Row("name","lang","state")
@@ -41,7 +42,7 @@ rdd=spark.sparkContext.parallelize(data)
 collData=rdd.collect()
 print(collData)
 for person in collData:
-    print(person.name + "," +str(person.lang))
+    print(f"{person.name},{str(person.lang)}")
 
 #DataFrame Example 1
 columns = ["name","languagesAtSchool","currentState"]
@@ -52,8 +53,8 @@ df.show()
 collData=df.collect()
 print(collData)
 for row in collData:
-    print(row.name + "," +str(row.lang))
-    
+    print(f"{row.name},{str(row.lang)}")
+
 #DataFrame Example 2
 data = [("James,,Smith",["Java","Scala","C++"],"CA"), 
 ("Michael,Rose,",["Spark","Java","C++"],"NJ"),
