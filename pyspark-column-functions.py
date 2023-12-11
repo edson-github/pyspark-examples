@@ -3,13 +3,14 @@
 author SparkByExamples.com
 """
 
+
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName('SparkByExamples.com').getOrCreate()
 
 data=[("James","Bond","100",None),
       ("Ann","Varsa","200",'F'),
       ("Tom Cruise","XXX","400",''),
-      ("Tom Brand",None,"400",'M')] 
+      ("Tom Brand",None,"400",'M')]
 columns=["fname","lname","id","gender"]
 df=spark.createDataFrame(data,columns)
 
@@ -54,11 +55,15 @@ df.select(df.fname.substr(1,2).alias("substr")).show()
 
 #when & otherwise
 from pyspark.sql.functions import when
-df.select(df.fname,df.lname,when(df.gender=="M","Male") \
-              .when(df.gender=="F","Female") \
-              .when(df.gender==None ,"") \
-              .otherwise(df.gender).alias("new_gender") \
-    ).show()
+df.select(
+    df.fname,
+    df.lname,
+    when(df.gender == "M", "Male")
+    .when(df.gender == "F", "Female")
+    .when(df.gender is None, "")
+    .otherwise(df.gender)
+    .alias("new_gender"),
+).show()
 
 #isin
 li=["100","200"]

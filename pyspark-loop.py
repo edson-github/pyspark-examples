@@ -44,7 +44,7 @@ rdd2=df.rdd.map(lambda x:
 def func1(x):
     firstName=x.firstname
     lastName=x.lastName
-    name=firstName+","+lastName
+    name = f"{firstName},{lastName}"
     gender=x.gender.lower()
     salary=x.salary*2
     return (name,gender,salary)

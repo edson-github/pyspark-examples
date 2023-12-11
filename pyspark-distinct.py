@@ -3,6 +3,7 @@
 author SparkByExamples.com
 """
 
+
 import pyspark
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import expr
@@ -25,13 +26,13 @@ df.printSchema()
 df.show(truncate=False)
 
 distinctDF = df.distinct()
-print("Distinct count: "+str(distinctDF.count()))
+print(f"Distinct count: {str(distinctDF.count())}")
 distinctDF.show(truncate=False)
 
 df2 = df.dropDuplicates()
-print("Distinct count: "+str(df2.count()))
+print(f"Distinct count: {str(df2.count())}")
 df2.show(truncate=False)
 
 dropDisDF = df.dropDuplicates(["department","salary"])
-print("Distinct count of department salary : "+str(dropDisDF.count()))
+print(f"Distinct count of department salary : {str(dropDisDF.count())}")
 dropDisDF.show(truncate=False)
